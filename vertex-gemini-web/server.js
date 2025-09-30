@@ -286,6 +286,20 @@ app.get('/api/prompt', async (_req, res) => {
 });
 
 /**
+ * Minimal API to expose the image prompt system instruction (이미지생성.txt)
+ */
+app.get('/api/image-prompt', async (_req, res) => {
+  try {
+    const p = path.resolve(__dirname, '..', '이미지생성.txt');
+    const text = await readFile(p, 'utf8');
+    res.type('text/plain').send(text);
+  } catch (err) {
+    console.error('[GET /api/image-prompt] error:', err);
+    res.status(500).json({ error: 'Failed to load image prompt' });
+  }
+});
+
+/**
  * Team B rosters by stage (fixed from champ_concept.txt)
  */
 const TEAM_B_BY_STAGE = {
